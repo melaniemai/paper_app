@@ -4,15 +4,15 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Pdf from 'react-native-pdf';
 
 const PdfViewer = ({navigation, uri}) => {
-  const source = {
-    uri: uri,
-    // uri: navigation.getParam('pdfUri'),
-    cache: true,
-  };
   // const source = {
-  //   uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+  //   uri: uri,
+  //   // uri: navigation.getParam('pdfUri'),
   //   cache: true,
   // };
+  const source = {
+    uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+    cache: true,
+  };
   const [numOfPages, setNumOfPages] = React.useState(0);
 
   return (
