@@ -19,10 +19,18 @@ export default function Scanner({navigation}) {
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({type, data}) => {
+  const handleBarCodeScanned = async ({data}) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    console.log(data);
+    try {
+      const response = await fetch(`https://paperuc.win/api/solutions/${data}`);
+      const blob = await response.blob();
+      const pdfUrl = blob._data.name;
+      navigation.navigate('PdfViewer', {pdfUri: pdfUrl});
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setScanned(false);
+    }
   };
 
   if (hasPermission === false) {
