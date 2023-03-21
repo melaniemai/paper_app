@@ -30,6 +30,7 @@ export default function Scanner({navigation}) {
       console.error(error);
     } finally {
       setScanned(false);
+      alert(`Bar code with data ${data} has been scanned!`);
     }
   };
 
