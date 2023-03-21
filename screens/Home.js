@@ -1,10 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import {IconButton, Surface} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 
 const Home = ({navigation}) => {
   return (
