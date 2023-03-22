@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Button, IconButton, Menu} from 'react-native-paper';
+import {Button, IconButton, Menu, Surface} from 'react-native-paper';
 import Pdf from 'react-native-pdf';
 // import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
@@ -16,14 +16,15 @@ const PdfViewer = ({route, navigation}) => {
   const [numOfPages, setNumOfPages] = React.useState(0);
   const [pageNum, setPageNum] = React.useState(1);
   const [goToPageNum, setGoToPageNum] = React.useState('');
-  const [visible, setVisible] = React.useState(false);
+  const [visibleMenu, setVisibleMenu] = React.useState(false);
 
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
+  const openMenu = () => setVisibleMenu(true);
+  const closeMenu = () => setVisibleMenu(false);
 
-  const {pdfUri} = route.params;
+  // const {pdfUri} = route.params;
   const source = {
-    uri: pdfUri,
+    // uri: pdfUri,
+    uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
     cache: true,
   };
 
@@ -74,7 +75,7 @@ const PdfViewer = ({route, navigation}) => {
             borderRadius: 20,
             width: '100%',
           }}>
-          <Button>Cancel</Button>
+          <Button mode={'contained'}>Cancel</Button>
           <TextInput
             style={styles.input}
             keyboardType="numeric"
@@ -84,67 +85,68 @@ const PdfViewer = ({route, navigation}) => {
             placeholder="Go to Page.."
           />
         </View> */}
-        <View style={styles.menuContainer}>
-          <Menu
-            style={styles.menu}
-            visible={visible}
-            onDismiss={closeMenu}
-            anchorPosition="bottom"
-            anchor={
-              <IconButton
-                icon="dots-horizontal"
-                iconColor="black"
-                onPress={openMenu}
-              />
-            }>
-            <Button
-              mode="text"
-              contentStyle={styles.button}
-              textColor="#3E7BFA"
-              icon="file-find-outline"
-              iconColor="white"
-              onPress={goToPage}>
-              Go to page
-            </Button>
-            <Button
-              mode="text"
-              contentStyle={styles.button}
-              textColor="#3E7BFA"
-              icon="file-upload-outline"
-              iconColor="white"
-              onPress={onShare}>
-              Share
-            </Button>
-            <Button
-              mode="text"
-              contentStyle={styles.button}
-              textColor="#3E7BFA"
-              icon="information-outline"
-              iconColor="white"
-              onPress={() => {}}>
-              Show Info
-            </Button>
-          </Menu>
+        <View style={styles.topBar}>
+          <View style={styles.pagesContainer}>
+            <Surface style={styles.pageNum} elevation={0}>
+              <Text style={styles.pageNumInput}>
+                {pageNum} of {numOfPages}
+              </Text>
+            </Surface>
+          </View>
+          <View style={styles.menuContainer}>
+            <Menu
+              style={styles.menu}
+              visible={visibleMenu}
+              onDismiss={closeMenu}
+              anchorPosition="bottom"
+              anchor={
+                <IconButton
+                  icon="dots-horizontal"
+                  iconColor="black"
+                  onPress={openMenu}
+                />
+              }>
+              <Button
+                mode="text"
+                contentStyle={styles.button}
+                textColor="#3E7BFA"
+                icon="file-find-outline"
+                iconColor="white"
+                onPress={goToPage}>
+                Go to page
+              </Button>
+              <Button
+                mode="text"
+                contentStyle={styles.button}
+                textColor="#3E7BFA"
+                icon="file-upload-outline"
+                iconColor="white"
+                onPress={onShare}>
+                Share
+              </Button>
+              <Button
+                mode="text"
+                contentStyle={styles.button}
+                textColor="#3E7BFA"
+                icon="information-outline"
+                iconColor="white"
+                onPress={() => {}}>
+                Show Info
+              </Button>
+            </Menu>
+          </View>
         </View>
-        {/* <View style={styles.pagesContainer}>
-          <Surface style={styles.pageNum} elevation={0}>
-            <TextInput>
-              <Text style={styles.pageNumInput}>{pageNum}</Text>
-            </TextInput>
-          </Surface>
-          <Text>of</Text>
-          <Surface style={styles.pageNum} elevation={0}>
-            <TextInput>
-              <Text style={styles.pageNumInput}>{numOfPages}</Text>
-            </TextInput>
-          </Surface>
-        </View> */}
         <Pdf
+          ref={pdf => {
+            this.pdf = pdf;
+          }}
           source={source}
           onLoadComplete={(numberOfPages, filePath) => {
+            console.log(`number of pages: ${numberOfPages}`);
             setNumOfPages(numberOfPages);
           }}
           onPageChanged={(page, numberOfPages) => {
+            console.log(`current page: ${page}`);
             setPageNum(page);
           }}
           onError={error => {
@@ -167,36 +169,31 @@ const PdfViewer = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  menuContainer: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    width: Dimensions.get('window').width,
-  },
-  menu: {
-    width: 175,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   bottomContainer: {
     justifyContent: 'flex-end',
     alignItems: 'center',
     width: Dimensions.get('window').width,
-    margin: 20,
+    marginVertical: 20,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
   },
   pagesContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    width: Dimensions.get('window').width / 2.5,
+    width: Dimensions.get('window').width / 4,
     margin: 10,
+  },
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    width: Dimensions.get('window').width,
+  },
+  menu: {
+    width: 175,
   },
   pdf: {
     flex: 1,
@@ -204,12 +201,11 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
   pageNum: {
-    width: 35,
-    height: 35,
     backgroundColor: '#F6F6F6',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    padding: 5,
   },
   pageNumInput: {
     fontSize: 18,
