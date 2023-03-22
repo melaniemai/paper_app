@@ -21,18 +21,6 @@ const PdfViewer = ({route, navigation}) => {
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
-  // if (
-  //   route.params === null ||
-  //   route.params === '' ||
-  //   route.params === undefined
-  // ) {
-  //   return (
-  //     <View style={styles.errorContainer}>
-  //       {/* eslint-disable-next-line react-native/no-inline-styles */}
-  //       <Text style={{fontWeight: '600', fontSize: 16}}>No PDF found.</Text>
-  //     </View>
-  //   );
-  // }
   const {pdfUri} = route.params;
   const source = {
     uri: pdfUri,

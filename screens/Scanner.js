@@ -1,7 +1,6 @@
 import {Camera, CameraType} from 'expo-camera';
 import React, {useState} from 'react';
 import {
-  Alert,
   Button,
   TouchableOpacity,
   Dimensions,
@@ -130,8 +129,6 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
     margin: 10,
-    // alignItems: 'flex-end',
-    // justifyContent: 'flex-start',
   },
   buttonContainer: {
     flex: 1,
