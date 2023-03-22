@@ -8,19 +8,23 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Button, IconButton, Menu, Surface} from 'react-native-paper';
+import {Button, IconButton, Menu, Searchbar, Surface} from 'react-native-paper';
 import Pdf from 'react-native-pdf';
 // import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const PdfViewer = ({route, navigation}) => {
   const [numOfPages, setNumOfPages] = React.useState(0);
   const [pageNum, setPageNum] = React.useState(1);
-  const [goToPageNum, setGoToPageNum] = React.useState('');
-  const [visibleMenu, setVisibleMenu] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  // const [goToPageNum, setGoToPageNum] = React.useState('');
+  // const [visibleMenu, setVisibleMenu] = React.useState(false);
 
-  const openMenu = () => setVisibleMenu(true);
-  const closeMenu = () => setVisibleMenu(false);
+  // const openMenu = () => setVisibleMenu(true);
+  // const closeMenu = () => setVisibleMenu(false);
 
+  /**
+   * ! UNCOMMENT const{pdfUri} = route.params WHEN NOT TESTING
+   */
   // const {pdfUri} = route.params;
   const source = {
     // uri: pdfUri,
@@ -28,9 +32,12 @@ const PdfViewer = ({route, navigation}) => {
     cache: true,
   };
 
+  const onChangeSearch = query => setSearchQuery(query);
+
   const goToPage = () => {
     if (pageNum > 0 && pageNum <= numOfPages) {
-      closeMenu();
+      Alert.alert('Valid page number');
+      // closeMenu();
     } else {
       Alert.alert('Invalid page number');
     }
@@ -42,98 +49,35 @@ const PdfViewer = ({route, navigation}) => {
     );
   };
 
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  };
-
   return (
     <>
       <View style={styles.container}>
-        {/* // TODO: GO TO PAGE FUNCTIONALITY AND DESIGN */}
-        {/* <View
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{
-            backgroundColor: '#fff',
-            padding: 10,
-            marginVertical: 10,
-            borderRadius: 20,
-            width: '100%',
-          }}>
-          <Button mode={'contained'}>Cancel</Button>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            value={goToPageNum}
-            onChangeText={setGoToPageNum}
-            placeholderTextColor="black"
-            placeholder="Go to Page.."
-          />
-        </View> */}
         <View style={styles.topBar}>
+          {/* <View>
+            <Button mode={'contained'}>Cancel</Button>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              value={goToPageNum}
+              onChangeText={setGoToPageNum}
+              placeholderTextColor="black"
+              placeholder="Go to Page.."
+            />
+          </View> */}
+          <View style={styles.searchBarContainer}>
+            <Searchbar
+              style={styles.searchBar}
+              placeholder="Search"
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+            />
+          </View>
           <View style={styles.pagesContainer}>
             <Surface style={styles.pageNum} elevation={0}>
               <Text style={styles.pageNumInput}>
                 {pageNum} of {numOfPages}
               </Text>
             </Surface>
-          </View>
-          <View style={styles.menuContainer}>
-            <Menu
-              style={styles.menu}
-              visible={visibleMenu}
-              onDismiss={closeMenu}
-              anchorPosition="bottom"
-              anchor={
-                <IconButton
-                  icon="dots-horizontal"
-                  iconColor="black"
-                  onPress={openMenu}
-                />
-              }>
-              <Button
-                mode="text"
-                contentStyle={styles.button}
-                textColor="#3E7BFA"
-                icon="file-find-outline"
-                iconColor="white"
-                onPress={goToPage}>
-                Go to page
-              </Button>
-              <Button
-                mode="text"
-                contentStyle={styles.button}
-                textColor="#3E7BFA"
-                icon="file-upload-outline"
-                iconColor="white"
-                onPress={onShare}>
-                Share
-              </Button>
-              <Button
-                mode="text"
-                contentStyle={styles.button}
-                textColor="#3E7BFA"
-                icon="information-outline"
-                iconColor="white"
-                onPress={() => {}}>
-                Show Info
-              </Button>
-            </Menu>
           </View>
         </View>
         <Pdf
@@ -154,7 +98,7 @@ const PdfViewer = ({route, navigation}) => {
           }}
           style={styles.pdf}
         />
-        <View style={styles.bottomContainer}>
+        <View style={styles.bottomBtnContainer}>
           <Button
             textColor="white"
             buttonColor="#3E7BFA"
@@ -169,31 +113,41 @@ const PdfViewer = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  bottomContainer: {
-    justifyContent: 'flex-end',
+  bottomBtnContainer: {
     alignItems: 'center',
-    width: Dimensions.get('window').width,
     marginVertical: 20,
   },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
   },
+  menu: {
+    width: 175,
+  },
   pagesContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     width: Dimensions.get('window').width / 4,
     margin: 10,
   },
+  // searchBarContainer: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'flex-start',
+  //   alignItems: 'center',
+  //   width: Dimensions.get('window').width / 1.5,
+  // },
+  searchBar: {
+    width: Dimensions.get('window').width / 1.5,
+    margin: 5,
+    padding: 0,
+    backgroundColor: '#d9dbda',
+  },
   topBar: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: Dimensions.get('window').width,
-  },
-  menu: {
-    width: 175,
   },
   pdf: {
     flex: 1,
@@ -201,7 +155,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
   pageNum: {
-    backgroundColor: '#F6F6F6',
+    backgroundColor: '#d9dbda',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
