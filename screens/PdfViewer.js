@@ -3,6 +3,7 @@ import {StyleSheet, Dimensions, View, Text, TextInput} from 'react-native';
 import {Button, Surface} from 'react-native-paper';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import Pdf from 'react-native-pdf';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const PdfViewer = ({navigation, uri}) => {
   // const source = {
@@ -17,8 +18,26 @@ const PdfViewer = ({navigation, uri}) => {
   const [numOfPages, setNumOfPages] = React.useState(0);
   const [pageNum, setPageNum] = React.useState(1);
 
+  // function scrollToInput(textInput) {
+  //   // Add a 'scroll' ref to your ScrollView
+  //   this.scroll.props.scrollToFocusedInput(textInput);
+  // }
+
   return (
     <View style={styles.container}>
+      <View style={styles.pagesContainer}>
+        <Surface style={styles.pageNum}>
+          <TextInput>
+            <Text style={styles.pageNumInput}>{pageNum}</Text>
+          </TextInput>
+        </Surface>
+        <Text>of</Text>
+        <Surface style={styles.pageNum}>
+          <TextInput>
+            <Text style={styles.pageNumInput}>{numOfPages}</Text>
+          </TextInput>
+        </Surface>
+      </View>
       <Pdf
         source={source}
         onLoadComplete={(numberOfPages, filePath) => {
@@ -35,19 +54,6 @@ const PdfViewer = ({navigation, uri}) => {
         style={styles.pdf}
       />
       <View style={styles.bottomContainer}>
-        <View style={styles.pagesContainer}>
-          <Surface style={styles.pageNum}>
-            <TextInput>
-              <Text style={styles.pageNumInput}>{pageNum}</Text>
-            </TextInput>
-          </Surface>
-          <Text>of</Text>
-          <Surface style={styles.pageNum}>
-            <TextInput>
-              <Text style={styles.pageNumInput}>{numOfPages}</Text>
-            </TextInput>
-          </Surface>
-        </View>
         <Button
           textColor="white"
           buttonColor="#023F63"
@@ -67,19 +73,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottomContainer: {
-    flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'center',
     width: Dimensions.get('window').width,
-    height: 100,
-    margin: 15,
+    margin: 20,
   },
   pagesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: Dimensions.get('window').width / 2,
-    height: 50,
+    width: Dimensions.get('window').width / 2.5,
+    // height: 50,
     margin: 10,
   },
   pdf: {
@@ -88,15 +92,15 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
   pageNum: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     backgroundColor: '#F6F6F6',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
   },
   pageNumInput: {
-    fontSize: 15,
+    fontSize: 18,
   },
 });
 
