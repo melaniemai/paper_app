@@ -92,13 +92,17 @@ const Scanner = ({navigation}) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.flashIcon} onPress={toggleFlashMode}>
             {flashMode === Camera.Constants.FlashMode.torch ? (
-              <IconButton icon="flash" />
+              <IconButton icon="flash" size={35} />
             ) : (
-              <IconButton icon="flash-off" />
+              <IconButton icon="flash-off" size={35} />
             )}
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <IconButton icon="camera-flip" />
+            {type === CameraType.back ? (
+              <IconButton icon="camera-flip" size={35} />
+            ) : (
+              <IconButton icon="camera-flip-outline" size={35} />
+            )}
           </TouchableOpacity>
         </View>
       </Camera>
@@ -115,11 +119,19 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   camera: {
-    width: width / 1.2,
-    height: height / 1.5,
+    width: width,
+    height: height,
     margin: 10,
+    // alignItems: 'flex-end',
+    // justifyContent: 'flex-start',
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
+    marginTop: 50,
   },
   text: {
     fontSize: 24,

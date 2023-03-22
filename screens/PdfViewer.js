@@ -1,32 +1,57 @@
-import * as React from 'react';
+import React from 'react';
 import {
   Alert,
-  StyleSheet,
   Dimensions,
-  View,
-  Text,
   TextInput,
   Share,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import {Button, Surface, Menu, IconButton} from 'react-native-paper';
+import {Button, IconButton, Menu} from 'react-native-paper';
 import Pdf from 'react-native-pdf';
 // import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const PdfViewer = ({route, navigation}) => {
+  const [numOfPages, setNumOfPages] = React.useState(0);
+  const [pageNum, setPageNum] = React.useState(1);
+  const [visible, setVisible] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+
+  if (
+    route.params === null ||
+    route.params === '' ||
+    route.params === undefined
+  ) {
+    return (
+      <View style={styles.errorContainer}>
+        {/* eslint-disable-next-line react-native/no-inline-styles */}
+        <Text style={{fontWeight: '600', fontSize: 16}}>No PDF found.</Text>
+      </View>
+    );
+  }
   const {pdfUri} = route.params;
   const source = {
     uri: pdfUri,
     cache: true,
   };
-  // const source = {
-  //   uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-  //   cache: true,
-  // };
-  const [numOfPages, setNumOfPages] = React.useState(0);
-  const [pageNum, setPageNum] = React.useState(1);
-  const [visible, setVisible] = React.useState(false);
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
+
+  const goToPage = () => {
+    if (pageNum > 0 && pageNum <= numOfPages) {
+      closeMenu();
+    } else {
+      Alert.alert('Invalid page number');
+    }
+
+    return (
+      <View style={styles.container}>
+        <TextInput value={searchQuery} onChangeText={setSearchQuery} />
+      </View>
+    );
+  };
 
   const onShare = async () => {
     try {
@@ -61,9 +86,8 @@ const PdfViewer = ({route, navigation}) => {
               <IconButton
                 icon="dots-horizontal"
                 iconColor="black"
-                onPress={openMenu}>
-                Show menu
-              </IconButton>
+                onPress={openMenu}
+              />
             }>
             <Button
               mode="text"
@@ -71,7 +95,7 @@ const PdfViewer = ({route, navigation}) => {
               textColor="#3E7BFA"
               icon="file-find-outline"
               iconColor="white"
-              onPress={() => {}}>
+              onPress={goToPage}>
               Go to page
             </Button>
             <Button
@@ -147,7 +171,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    // backgroundColor: '#fff',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   bottomContainer: {
     justifyContent: 'flex-end',
@@ -182,6 +210,11 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
+  },
+  dialogContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
 });
 
