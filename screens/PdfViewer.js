@@ -15,24 +15,24 @@ import Pdf from 'react-native-pdf';
 const PdfViewer = ({route, navigation}) => {
   const [numOfPages, setNumOfPages] = React.useState(0);
   const [pageNum, setPageNum] = React.useState(1);
+  const [goToPageNum, setGoToPageNum] = React.useState('');
   const [visible, setVisible] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState('');
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
-  if (
-    route.params === null ||
-    route.params === '' ||
-    route.params === undefined
-  ) {
-    return (
-      <View style={styles.errorContainer}>
-        {/* eslint-disable-next-line react-native/no-inline-styles */}
-        <Text style={{fontWeight: '600', fontSize: 16}}>No PDF found.</Text>
-      </View>
-    );
-  }
+  // if (
+  //   route.params === null ||
+  //   route.params === '' ||
+  //   route.params === undefined
+  // ) {
+  //   return (
+  //     <View style={styles.errorContainer}>
+  //       {/* eslint-disable-next-line react-native/no-inline-styles */}
+  //       <Text style={{fontWeight: '600', fontSize: 16}}>No PDF found.</Text>
+  //     </View>
+  //   );
+  // }
   const {pdfUri} = route.params;
   const source = {
     uri: pdfUri,
@@ -48,7 +48,7 @@ const PdfViewer = ({route, navigation}) => {
 
     return (
       <View style={styles.container}>
-        <TextInput value={searchQuery} onChangeText={setSearchQuery} />
+        {/* <TextInput value={searchQuery} onChangeText={setSearchQuery} /> */}
       </View>
     );
   };
@@ -76,6 +76,26 @@ const PdfViewer = ({route, navigation}) => {
   return (
     <>
       <View style={styles.container}>
+        {/* // TODO: GO TO PAGE FUNCTIONALITY AND DESIGN */}
+        {/* <View
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{
+            backgroundColor: '#fff',
+            padding: 10,
+            marginVertical: 10,
+            borderRadius: 20,
+            width: '100%',
+          }}>
+          <Button>Cancel</Button>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={goToPageNum}
+            onChangeText={setGoToPageNum}
+            placeholderTextColor="black"
+            placeholder="Go to Page.."
+          />
+        </View> */}
         <View style={styles.menuContainer}>
           <Menu
             style={styles.menu}
@@ -149,8 +169,8 @@ const PdfViewer = ({route, navigation}) => {
             textColor="white"
             buttonColor="#3E7BFA"
             mode="contained"
-            onPress={() => navigation.navigate('Scanner')}>
-            Scan another Barcode
+            onPress={() => navigation.navigate('Home')}>
+            Go Home
           </Button>
         </View>
       </View>
@@ -188,7 +208,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: Dimensions.get('window').width / 2.5,
-    // height: 50,
     margin: 10,
   },
   pdf: {
@@ -211,10 +230,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
   },
-  dialogContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+  input: {
+    height: 40,
+    margin: 10,
+    borderWidth: 1,
+    padding: 10,
+    color: 'black',
   },
 });
 

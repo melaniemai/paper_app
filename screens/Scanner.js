@@ -1,6 +1,7 @@
 import {Camera, CameraType} from 'expo-camera';
 import React, {useState} from 'react';
 import {
+  Alert,
   Button,
   TouchableOpacity,
   Dimensions,
@@ -65,20 +66,27 @@ const Scanner = ({navigation}) => {
     );
   }
 
-  const handleBarCodeScanned = ({data}) => {
+  const handleBarCodeScanned = async ({data}) => {
     setScanned(true);
-    try {
-      // const response = await fetch(`https://paperuc.win/api/solutions/${data}`);
-      // const blob = await response.blob();
-      // const pdfUrl = blob._data.name;
-      navigation.navigate('PdfViewer', {pdfUri: data});
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setScanned(false);
-      // alert(`Bar code with data ${data} has been scanned!`);
-    }
-    // alert(`Bar code with data ${data} has been scanned!`);
+    fetch(`https://paperuc.win/api/solutions/${data}`)
+      .then(response => {
+        const statusCode = response.status;
+        const resp = response;
+        return Promise.all([statusCode, resp]);
+      })
+      .then(([statusCode, resp]) => {
+        if (statusCode === 200) {
+          navigation.navigate('PdfViewer', {pdfUri: resp.url});
+        } else {
+          Alert.alert('Error');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      })
+      .finally(() => {
+        setScanned(false);
+      });
   };
 
   return (

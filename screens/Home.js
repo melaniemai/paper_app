@@ -25,7 +25,7 @@ const Home = ({navigation}) => {
           </Surface>
         </View>
       </SafeAreaView>
-      <SafeAreaView>
+      {/* <SafeAreaView>
         <View style={styles.bottom}>
           <Surface style={styles.surface}>
             <IconButton
@@ -38,7 +38,7 @@ const Home = ({navigation}) => {
             />
           </Surface>
         </View>
-      </SafeAreaView>
+      </SafeAreaView> */}
     </View>
   );
 };
