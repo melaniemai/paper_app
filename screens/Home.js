@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {IconButton, Surface} from 'react-native-paper';
+import {IconButton} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Home = ({navigation}) => {
@@ -13,30 +13,27 @@ const Home = ({navigation}) => {
       </SafeAreaView>
       <SafeAreaView>
         <View style={styles.bottom}>
-          <Surface style={styles.surface}>
-            <IconButton
-              icon="camera"
-              iconColor="black"
-              mode="contained-tonal"
-              size={30}
-              containerColor="#F6F6F6"
-              onPress={() => navigation.navigate('Scanner')}
-            />
-          </Surface>
+          <IconButton
+            style={styles.cameraIcon}
+            icon="camera"
+            iconColor="black"
+            mode="contained-tonal"
+            size={30}
+            containerColor="#F6F6F6"
+            onPress={() => navigation.navigate('Scanner')}
+          />
         </View>
       </SafeAreaView>
       <SafeAreaView>
         <View style={styles.bottom}>
-          <Surface style={styles.surface}>
-            <IconButton
-              icon="balloon"
-              iconColor="black"
-              mode="contained-tonal"
-              size={30}
-              containerColor="#F6F6F6"
-              onPress={() => navigation.navigate('PdfViewer')}
-            />
-          </Surface>
+          <IconButton
+            icon="balloon"
+            iconColor="black"
+            mode="contained-tonal"
+            size={30}
+            containerColor="#F6F6F6"
+            onPress={() => navigation.navigate('PdfViewer')}
+          />
         </View>
       </SafeAreaView>
     </View>
@@ -63,13 +60,13 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 0.5,
   },
-  surface: {
+  cameraIcon: {
     padding: 8,
-    height: 80,
-    width: 80,
+    height: 100,
+    width: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 40,
+    borderRadius: 50,
     backgroundColor: '#F6F6F6',
   },
 });

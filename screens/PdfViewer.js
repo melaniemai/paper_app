@@ -8,7 +8,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Button, IconButton, Menu, Searchbar, Surface} from 'react-native-paper';
+import {Button, IconButton, Menu, Surface} from 'react-native-paper';
+import {SearchBar} from '@rneui/base';
 import Pdf from 'react-native-pdf';
 // import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
@@ -53,21 +54,11 @@ const PdfViewer = ({route, navigation}) => {
     <>
       <View style={styles.container}>
         <View style={styles.topBar}>
-          {/* <View>
-            <Button mode={'contained'}>Cancel</Button>
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              value={goToPageNum}
-              onChangeText={setGoToPageNum}
-              placeholderTextColor="black"
-              placeholder="Go to Page.."
-            />
-          </View> */}
           <View style={styles.searchBarContainer}>
-            <Searchbar
-              style={styles.searchBar}
-              placeholder="Search"
+            <SearchBar
+              containerStyle={styles.searchBar}
+              platform="ios"
+              placeholder="Go to Page.."
               onChangeText={onChangeSearch}
               value={searchQuery}
             />
@@ -126,26 +117,14 @@ const styles = StyleSheet.create({
   },
   pagesContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    width: Dimensions.get('window').width / 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: Dimensions.get('window').width * 0.25,
     margin: 10,
-  },
-  // searchBarContainer: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'flex-start',
-  //   alignItems: 'center',
-  //   width: Dimensions.get('window').width / 1.5,
-  // },
-  searchBar: {
-    width: Dimensions.get('window').width / 1.5,
-    margin: 5,
-    padding: 0,
-    backgroundColor: '#d9dbda',
   },
   topBar: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     alignItems: 'center',
     width: Dimensions.get('window').width,
   },
@@ -174,6 +153,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     color: 'black',
+  },
+  searchBarContainer: {
+    width: Dimensions.get('window').width * 0.7,
+  },
+  searchBar: {
+    backgroundColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderTopColor: 'transparent',
   },
 });
 
