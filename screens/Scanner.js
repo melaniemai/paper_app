@@ -67,18 +67,18 @@ const Scanner = ({navigation}) => {
 
   const handleBarCodeScanned = ({data}) => {
     setScanned(true);
-    // try {
-    //   const response = await fetch(`https://paperuc.win/api/solutions/${data}`);
-    //   const blob = await response.blob();
-    //   const pdfUrl = blob._data.name;
-    //   navigation.navigate('PdfViewer', {pdfUri: pdfUrl});
-    // } catch (error) {
-    //   console.error(error);
-    // } finally {
-    //   setScanned(false);
-    //   alert(`Bar code with data ${data} has been scanned!`);
-    // }
-    alert(`Bar code with data ${data} has been scanned!`);
+    try {
+      // const response = await fetch(`https://paperuc.win/api/solutions/${data}`);
+      // const blob = await response.blob();
+      // const pdfUrl = blob._data.name;
+      navigation.navigate('PdfViewer', {pdfUri: data});
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setScanned(false);
+      // alert(`Bar code with data ${data} has been scanned!`);
+    }
+    // alert(`Bar code with data ${data} has been scanned!`);
   };
 
   return (

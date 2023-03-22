@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Arial',
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#023F63',
+    color: '#3E7BFA',
   },
   top: {
     flex: 0.2,

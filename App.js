@@ -17,9 +17,21 @@ const App = () => {
       <SafeAreaView style={styles.container}>
         <PaperProvider>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Scanner" component={Scanner} />
-            <Stack.Screen name="PdfViewer" component={PdfViewer} />
+            <Stack.Screen
+              name="Home"
+              options={{title: 'Welcome'}}
+              component={Home}
+            />
+            <Stack.Screen
+              name="Scanner"
+              options={{title: 'Scan Barcode'}}
+              component={Scanner}
+            />
+            <Stack.Screen
+              name="PdfViewer"
+              options={{title: ''}}
+              component={PdfViewer}
+            />
           </Stack.Navigator>
         </PaperProvider>
       </SafeAreaView>
