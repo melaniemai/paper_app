@@ -78,7 +78,7 @@ const Scanner = ({navigation}) => {
         if (statusCode === 200) {
           navigation.navigate('PdfViewer', {pdfUri: resp.url});
         } else {
-          Alert.alert('Error');
+          navigation.navigate('ErrorStatus');
         }
       })
       .catch(error => {

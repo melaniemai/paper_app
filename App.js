@@ -8,6 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './screens/Home';
 import Scanner from './screens/Scanner';
 import PdfViewer from './screens/PdfViewer';
+import ErrorStatus from './screens/ErrorStatus';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,11 @@ const App = () => {
               name="PdfViewer"
               options={{title: ''}}
               component={PdfViewer}
+            />
+            <Stack.Screen
+              name="ErrorStatus"
+              options={{title: ''}}
+              component={ErrorStatus}
             />
           </Stack.Navigator>
         </PaperProvider>
