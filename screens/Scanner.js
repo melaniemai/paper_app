@@ -28,8 +28,7 @@ const Scanner = ({navigation}) => {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
-        {/* eslint-disable-next-line react-native/no-inline-styles */}
-        <Text style={{textAlign: 'center', margin: 5, fontSize: 16}}>
+        <Text style={styles.noAccessTitle}>
           We need your permission to show the camera.
         </Text>
         <Text style={styles.centerText}>
@@ -118,18 +117,6 @@ const Scanner = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 10,
-  },
-  camera: {
-    width: width,
-    height: height,
-    margin: 10,
-  },
   buttonContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -138,16 +125,33 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginTop: 50,
   },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
+  camera: {
+    width: width,
+    height: height,
+    margin: 10,
+  },
+  centerText: {
+    textAlign: 'center',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10,
   },
   noAccessSteps: {
     fontWeight: 'bold',
   },
-  centerText: {
+  noAccessTitle: {
     textAlign: 'center',
+    margin: 5,
+    fontSize: 16,
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

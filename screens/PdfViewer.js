@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  Alert,
-  Dimensions,
-  TextInput,
-  Share,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {Button, IconButton, Menu, Surface} from 'react-native-paper';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Button, Surface} from 'react-native-paper';
 import {SearchBar} from '@rneui/base';
 import Pdf from 'react-native-pdf';
 
@@ -111,12 +103,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width * 0.3,
     // margin: 10,
   },
-  topBar: {
-    flexDirection: 'row',
-    // justifyContent: 'space-between',
-    alignItems: 'center',
-    width: Dimensions.get('window').width,
-  },
   pdf: {
     flex: 1,
     width: Dimensions.get('window').width,
@@ -134,24 +120,19 @@ const styles = StyleSheet.create({
   pageNumInput: {
     fontSize: 18,
   },
-  button: {
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-  },
-  input: {
-    height: 40,
-    margin: 10,
-    borderWidth: 1,
-    padding: 10,
-    color: 'black',
-  },
-  searchBarContainer: {
-    width: Dimensions.get('window').width * 0.7,
-  },
   searchBar: {
     backgroundColor: 'transparent',
     borderBottomColor: 'transparent',
     borderTopColor: 'transparent',
+  },
+  searchBarContainer: {
+    width: Dimensions.get('window').width * 0.7,
+  },
+  topBar: {
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+    alignItems: 'center',
+    width: Dimensions.get('window').width,
   },
 });
 

@@ -44,21 +44,11 @@ const Home = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 10,
-  },
   baseText: {
     fontFamily: 'Arial',
     fontSize: 24,
     fontWeight: 'bold',
     color: '#3E7BFA',
-  },
-  top: {
-    flex: 0.2,
   },
   bottom: {
     flex: 0.5,
@@ -71,6 +61,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 40,
     backgroundColor: '#F6F6F6',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10,
+  },
+  top: {
+    flex: 0.2,
   },
 });
 
