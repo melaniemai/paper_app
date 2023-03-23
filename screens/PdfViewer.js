@@ -17,6 +17,7 @@ const PdfViewer = ({route, navigation}) => {
   const [numOfPages, setNumOfPages] = React.useState(0);
   const [pageNum, setPageNum] = React.useState(1);
   const [searchQuery, setSearchQuery] = React.useState('');
+
   // const [goToPageNum, setGoToPageNum] = React.useState('');
   // const [visibleMenu, setVisibleMenu] = React.useState(false);
 
@@ -33,7 +34,11 @@ const PdfViewer = ({route, navigation}) => {
     cache: true,
   };
 
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = query => {
+    setSearchQuery(query);
+    setPageNum(query);
+    this.pdf.setPage(Number(query));
+  };
 
   const goToPage = () => {
     if (pageNum > 0 && pageNum <= numOfPages) {
@@ -134,11 +139,13 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
   pageNum: {
-    backgroundColor: '#d9dbda',
+    backgroundColor: '#dcdce1',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    padding: 5,
+    padding: 15,
+    width: Dimensions.get('window').width * 0.25,
+    minHeight: 36,
   },
   pageNumInput: {
     fontSize: 18,

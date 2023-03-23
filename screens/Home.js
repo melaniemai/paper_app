@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {IconButton} from 'react-native-paper';
+import {IconButton, Surface} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Home = ({navigation}) => {
@@ -13,27 +13,30 @@ const Home = ({navigation}) => {
       </SafeAreaView>
       <SafeAreaView>
         <View style={styles.bottom}>
-          <IconButton
-            style={styles.cameraIcon}
-            icon="camera"
-            iconColor="black"
-            mode="contained-tonal"
-            size={30}
-            containerColor="#F6F6F6"
-            onPress={() => navigation.navigate('Scanner')}
-          />
+          <Surface style={styles.card}>
+            <IconButton
+              icon="camera"
+              iconColor="black"
+              mode="contained-tonal"
+              size={30}
+              containerColor="#F6F6F6"
+              onPress={() => navigation.navigate('Scanner')}
+            />
+          </Surface>
         </View>
       </SafeAreaView>
       <SafeAreaView>
         <View style={styles.bottom}>
-          <IconButton
-            icon="balloon"
-            iconColor="black"
-            mode="contained-tonal"
-            size={30}
-            containerColor="#F6F6F6"
-            onPress={() => navigation.navigate('PdfViewer')}
-          />
+          <Surface style={styles.card}>
+            <IconButton
+              icon="balloon"
+              iconColor="black"
+              mode="contained-tonal"
+              size={30}
+              containerColor="#F6F6F6"
+              onPress={() => navigation.navigate('PdfViewer')}
+            />
+          </Surface>
         </View>
       </SafeAreaView>
     </View>
@@ -60,13 +63,13 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 0.5,
   },
-  cameraIcon: {
+  card: {
     padding: 8,
-    height: 100,
-    width: 100,
+    height: 80,
+    width: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 50,
+    borderRadius: 40,
     backgroundColor: '#F6F6F6',
   },
 });
