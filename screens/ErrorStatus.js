@@ -7,8 +7,7 @@ const ErrorStatus = ({route, navigation}) => {
   if (statusC === 403) {
     return (
       <View style={styles.container}>
-        <Text style={styles.mainText}>403 Forbidden</Text>
-        <Text>
+        <Text style={styles.mainText}>
           The professor has not unlocked the solutions for this exam yet.
         </Text>
         <Text>Scan another barcode or go back to the home screen.</Text>
@@ -20,8 +19,9 @@ const ErrorStatus = ({route, navigation}) => {
   if (statusC === 404) {
     return (
       <View style={styles.container}>
-        <Text style={styles.mainText}>404 Not Found</Text>
-        <Text>The exam solutions for that barcode were not found.</Text>
+        <Text style={styles.mainText}>
+          The exam solutions for that barcode were not found.
+        </Text>
         <Text>Scan another barcode or go back to the home screen.</Text>
         <Button title="Home" onPress={() => navigation.navigate('Home')} />
       </View>
@@ -37,8 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   mainText: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 export default ErrorStatus;

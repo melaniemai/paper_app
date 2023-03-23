@@ -88,31 +88,35 @@ const Scanner = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Camera
-        style={styles.camera}
-        type={type}
-        flashMode={flashMode}
-        autoFocus={Camera.Constants.AutoFocus.on}
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.flashIcon} onPress={toggleFlashMode}>
-            {flashMode === Camera.Constants.FlashMode.torch ? (
-              <IconButton icon="flash" size={35} />
-            ) : (
-              <IconButton icon="flash-off" size={35} />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            {type === CameraType.back ? (
-              <IconButton icon="camera-flip" size={35} />
-            ) : (
-              <IconButton icon="camera-flip-outline" size={35} />
-            )}
-          </TouchableOpacity>
-        </View>
-      </Camera>
-    </View>
+    <>
+      <View style={styles.container}>
+        <Camera
+          style={styles.camera}
+          type={type}
+          flashMode={flashMode}
+          autoFocus={Camera.Constants.AutoFocus.on}
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.flashIcon}
+              onPress={toggleFlashMode}>
+              {flashMode === Camera.Constants.FlashMode.torch ? (
+                <IconButton icon="flash" size={35} />
+              ) : (
+                <IconButton icon="flash-off" size={35} />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+              {type === CameraType.back ? (
+                <IconButton icon="camera-flip" size={35} />
+              ) : (
+                <IconButton icon="camera-flip-outline" size={35} />
+              )}
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      </View>
+    </>
   );
 };
 

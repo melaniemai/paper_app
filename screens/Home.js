@@ -25,20 +25,6 @@ const Home = ({navigation}) => {
           </Surface>
         </View>
       </SafeAreaView>
-      <SafeAreaView>
-        <View style={styles.bottom}>
-          <Surface style={styles.card}>
-            <IconButton
-              icon="balloon"
-              iconColor="black"
-              mode="contained-tonal"
-              size={30}
-              containerColor="#F6F6F6"
-              onPress={() => navigation.navigate('PdfViewer')}
-            />
-          </Surface>
-        </View>
-      </SafeAreaView>
     </View>
   );
 };

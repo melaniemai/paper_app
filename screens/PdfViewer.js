@@ -9,13 +9,10 @@ const PdfViewer = ({route, navigation}) => {
   const [pageNum, setPageNum] = React.useState(1);
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  /**
-   * ! UNCOMMENT const{pdfUri} = route.params WHEN NOT TESTING
-   */
-  // const {pdfUri} = route.params;
+  const {pdfUri} = route.params;
   const source = {
-    // uri: pdfUri,
-    uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+    uri: pdfUri,
+    // uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
     cache: true,
   };
 
@@ -101,7 +98,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: Dimensions.get('window').width * 0.3,
-    // margin: 10,
   },
   pdf: {
     flex: 1,
