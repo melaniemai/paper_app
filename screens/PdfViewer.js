@@ -11,18 +11,11 @@ import {
 import {Button, IconButton, Menu, Surface} from 'react-native-paper';
 import {SearchBar} from '@rneui/base';
 import Pdf from 'react-native-pdf';
-// import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const PdfViewer = ({route, navigation}) => {
   const [numOfPages, setNumOfPages] = React.useState(0);
   const [pageNum, setPageNum] = React.useState(1);
   const [searchQuery, setSearchQuery] = React.useState('');
-
-  // const [goToPageNum, setGoToPageNum] = React.useState('');
-  // const [visibleMenu, setVisibleMenu] = React.useState(false);
-
-  // const openMenu = () => setVisibleMenu(true);
-  // const closeMenu = () => setVisibleMenu(false);
 
   /**
    * ! UNCOMMENT const{pdfUri} = route.params WHEN NOT TESTING
@@ -36,23 +29,6 @@ const PdfViewer = ({route, navigation}) => {
 
   const onChangeSearch = query => {
     setSearchQuery(query);
-    setPageNum(query);
-    this.pdf.setPage(Number(query));
-  };
-
-  const goToPage = () => {
-    if (pageNum > 0 && pageNum <= numOfPages) {
-      Alert.alert('Valid page number');
-      // closeMenu();
-    } else {
-      Alert.alert('Invalid page number');
-    }
-
-    return (
-      <View style={styles.container}>
-        {/* <TextInput value={searchQuery} onChangeText={setSearchQuery} /> */}
-      </View>
-    );
   };
 
   return (
@@ -65,6 +41,16 @@ const PdfViewer = ({route, navigation}) => {
               platform="ios"
               placeholder="Go to Page.."
               onChangeText={onChangeSearch}
+              onSubmitEditing={e => {
+                if (e.nativeEvent.text === '0' || e.nativeEvent.text === '') {
+                  setPageNum(pageNum) && this.pdf.setPage(pageNum);
+                } else if (Number(e.nativeEvent.text) > numOfPages) {
+                  setPageNum(e.nativeEvent.text);
+                } else {
+                  setPageNum(e.nativeEvent.text);
+                  this.pdf.setPage(Number(e.nativeEvent.text));
+                }
+              }}
               value={searchQuery}
             />
           </View>
@@ -82,11 +68,9 @@ const PdfViewer = ({route, navigation}) => {
           }}
           source={source}
           onLoadComplete={(numberOfPages, filePath) => {
-            console.log(`number of pages: ${numberOfPages}`);
             setNumOfPages(numberOfPages);
           }}
           onPageChanged={(page, numberOfPages) => {
-            console.log(`current page: ${page}`);
             setPageNum(page);
           }}
           onError={error => {
@@ -124,8 +108,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: Dimensions.get('window').width * 0.25,
-    margin: 10,
+    width: Dimensions.get('window').width * 0.3,
+    // margin: 10,
   },
   topBar: {
     flexDirection: 'row',
@@ -143,9 +127,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    padding: 15,
-    width: Dimensions.get('window').width * 0.25,
-    minHeight: 36,
+    padding: 5,
+    width: Dimensions.get('window').width * 0.27,
+    minHeight: 45,
   },
   pageNumInput: {
     fontSize: 18,
