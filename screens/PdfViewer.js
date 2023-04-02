@@ -1,14 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Alert, Dimensions, Share, StyleSheet, Text, View} from 'react-native';
-import {IconButton, Surface} from 'react-native-paper';
+import {ActivityIndicator, Button, Surface} from 'react-native-paper';
 import {SearchBar} from '@rneui/base';
 import Pdf from 'react-native-pdf';
-// import Share from 'react-native-share';
 
 const PdfViewer = ({route, navigation}) => {
   const [numOfPages, setNumOfPages] = React.useState(0);
   const [pageNum, setPageNum] = React.useState(1);
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
 
   const {pdfUri} = route.params;
   const source = {
@@ -42,68 +48,75 @@ const PdfViewer = ({route, navigation}) => {
 
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.topBar}>
-          <View style={styles.searchBarContainer}>
-            <SearchBar
-              containerStyle={styles.searchBar}
-              platform="ios"
-              placeholder="Go to Page.."
-              onChangeText={onChangeSearch}
-              onSubmitEditing={e => {
-                if (e.nativeEvent.text === '0' || e.nativeEvent.text === '') {
-                  setPageNum(pageNum) && this.pdf.setPage(pageNum);
-                } else if (Number(e.nativeEvent.text) > numOfPages) {
-                  setPageNum(e.nativeEvent.text);
-                } else {
-                  setPageNum(e.nativeEvent.text);
-                  this.pdf.setPage(Number(e.nativeEvent.text));
-                }
-              }}
-              value={searchQuery}
-            />
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="##3E7BFA" />
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.topBar}>
+            <View style={styles.searchBarContainer}>
+              <SearchBar
+                containerStyle={styles.searchBar}
+                platform="ios"
+                placeholder="Go to Page.."
+                onChangeText={onChangeSearch}
+                onSubmitEditing={e => {
+                  if (e.nativeEvent.text === '0' || e.nativeEvent.text === '') {
+                    setPageNum(pageNum) && this.pdf.setPage(pageNum);
+                  } else if (Number(e.nativeEvent.text) > numOfPages) {
+                    setPageNum(e.nativeEvent.text);
+                  } else {
+                    setPageNum(e.nativeEvent.text);
+                    this.pdf.setPage(Number(e.nativeEvent.text));
+                  }
+                }}
+                value={searchQuery}
+              />
+            </View>
+            <View style={styles.pagesContainer}>
+              <Surface style={styles.pageNum} elevation={0}>
+                <Text style={styles.pageNumInput}>
+                  {pageNum} of {numOfPages}
+                </Text>
+              </Surface>
+            </View>
           </View>
-          <View style={styles.pagesContainer}>
-            <Surface style={styles.pageNum} elevation={0}>
-              <Text style={styles.pageNumInput}>
-                {pageNum} of {numOfPages}
-              </Text>
-            </Surface>
+          <Pdf
+            ref={pdf => {
+              this.pdf = pdf;
+            }}
+            source={source}
+            onLoadComplete={(numberOfPages, filePath) => {
+              setNumOfPages(numberOfPages);
+            }}
+            onPageChanged={(page, numberOfPages) => {
+              setPageNum(page);
+            }}
+            onError={error => {
+              console.log(error);
+            }}
+            style={styles.pdf}
+          />
+          <View style={styles.bottomBtnContainer}>
+            <Button
+              icon="home"
+              textColor="white"
+              buttonColor="#3E7BFA"
+              mode="contained"
+              onPress={() => navigation.navigate('Home')}>
+              Go Home
+            </Button>
+            <Button
+              icon="share"
+              textColor="#3E7BFA"
+              mode="outlined"
+              onPress={() => onShare(pdfUri)}>
+              Share
+            </Button>
           </View>
         </View>
-        <Pdf
-          ref={pdf => {
-            this.pdf = pdf;
-          }}
-          source={source}
-          onLoadComplete={(numberOfPages, filePath) => {
-            setNumOfPages(numberOfPages);
-          }}
-          onPageChanged={(page, numberOfPages) => {
-            setPageNum(page);
-          }}
-          onError={error => {
-            console.log(error);
-          }}
-          style={styles.pdf}
-        />
-        <View style={styles.bottomBtnContainer}>
-          <IconButton
-            icon="home"
-            iconColor="white"
-            mode="contained"
-            onPress={() => navigation.navigate('Home')}>
-            Go Home
-          </IconButton>
-          <IconButton
-            icon="share"
-            iconColor="white"
-            mode="contained"
-            onPress={() => onShare(pdfUri)}>
-            Share
-          </IconButton>
-        </View>
-      </View>
+      )}
     </>
   );
 };
@@ -112,12 +125,20 @@ const styles = StyleSheet.create({
   bottomBtnContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     marginVertical: 20,
+    marginHorizontal: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   menu: {
     width: 175,

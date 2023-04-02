@@ -1,6 +1,7 @@
 import {Camera, CameraType} from 'expo-camera';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Button,
   TouchableOpacity,
   Dimensions,
@@ -18,6 +19,7 @@ const Scanner = ({navigation}) => {
   const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
   const [scanned, setScanned] = useState(false);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [loading, setLoading] = useState(true);
 
   if (!permission) {
     // Camera permissions are still loading
