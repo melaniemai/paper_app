@@ -3,6 +3,7 @@ import {Alert, Dimensions, Share, StyleSheet, Text, View} from 'react-native';
 import {IconButton, Surface} from 'react-native-paper';
 import {SearchBar} from '@rneui/base';
 import Pdf from 'react-native-pdf';
+// import Share from 'react-native-share';
 
 const PdfViewer = ({route, navigation}) => {
   const [numOfPages, setNumOfPages] = React.useState(0);
@@ -20,11 +21,10 @@ const PdfViewer = ({route, navigation}) => {
     setSearchQuery(query);
   };
 
-  const onShare = async () => {
+  const onShare = async url => {
     try {
       const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
+        url: `${url}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -99,7 +99,7 @@ const PdfViewer = ({route, navigation}) => {
             icon="share"
             iconColor="white"
             mode="contained"
-            onPress={onShare}>
+            onPress={() => onShare(pdfUri)}>
             Share
           </IconButton>
         </View>
