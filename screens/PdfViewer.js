@@ -1,6 +1,6 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import {Button, Surface} from 'react-native-paper';
+import {Alert, Dimensions, Share, StyleSheet, Text, View} from 'react-native';
+import {IconButton, Surface} from 'react-native-paper';
 import {SearchBar} from '@rneui/base';
 import Pdf from 'react-native-pdf';
 
@@ -18,6 +18,26 @@ const PdfViewer = ({route, navigation}) => {
 
   const onChangeSearch = query => {
     setSearchQuery(query);
+  };
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'React Native | A framework for building native apps using React',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   return (
@@ -68,13 +88,20 @@ const PdfViewer = ({route, navigation}) => {
           style={styles.pdf}
         />
         <View style={styles.bottomBtnContainer}>
-          <Button
-            textColor="white"
-            buttonColor="#3E7BFA"
+          <IconButton
+            icon="home"
+            iconColor="white"
             mode="contained"
             onPress={() => navigation.navigate('Home')}>
             Go Home
-          </Button>
+          </IconButton>
+          <IconButton
+            icon="share"
+            iconColor="white"
+            mode="contained"
+            onPress={onShare}>
+            Share
+          </IconButton>
         </View>
       </View>
     </>
@@ -83,7 +110,9 @@ const PdfViewer = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
   bottomBtnContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: 20,
   },
   container: {
