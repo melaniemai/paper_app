@@ -50,7 +50,7 @@ const PdfViewer = ({route, navigation}) => {
     <>
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="##3E7BFA" />
+          <ActivityIndicator size="large" color="#3E7BFA" />
         </View>
       ) : (
         <View style={styles.container}>
@@ -65,7 +65,7 @@ const PdfViewer = ({route, navigation}) => {
                   if (e.nativeEvent.text === '0' || e.nativeEvent.text === '') {
                     setPageNum(pageNum) && this.pdf.setPage(pageNum);
                   } else if (Number(e.nativeEvent.text) > numOfPages) {
-                    setPageNum(e.nativeEvent.text);
+                    setPageNum(pageNum);
                   } else {
                     setPageNum(e.nativeEvent.text);
                     this.pdf.setPage(Number(e.nativeEvent.text));
@@ -96,6 +96,8 @@ const PdfViewer = ({route, navigation}) => {
             onError={error => {
               console.log(error);
             }}
+            trustAllCerts={true}
+            showsVerticalScrollIndicator={true}
             style={styles.pdf}
           />
           <View style={styles.bottomBtnContainer}>
