@@ -20,7 +20,7 @@ const PdfViewer = ({route, navigation}) => {
   const source = {
     uri: pdfUri,
     // uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-    cache: true,
+    cache: false,
   };
 
   const onChangeSearch = query => {
@@ -96,7 +96,6 @@ const PdfViewer = ({route, navigation}) => {
             onError={error => {
               console.log(error);
             }}
-            trustAllCerts={true}
             showsVerticalScrollIndicator={true}
             style={styles.pdf}
           />
